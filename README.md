@@ -10,16 +10,16 @@
 
 ## Running Tests
 
-##Contributing to Esri Open Source Projects
+## Contributing to Esri Open Source Projects
 
 We welcome contributions to our little project.
 
-Issues
+### Issues
 ------
 
 Feel free to submit issues and enhancement requests.
 
-Contributing
+### Contributing
 ------------
 
 Please refer to each project's style guidelines and guidelines for submitting patches and additions. In general, we follow the "fork-and-pull" Git workflow.
