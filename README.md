@@ -10,7 +10,7 @@
 
 ## Running Tests
 
-## Contributing to Esri Open Source Projects
+## Contributing to VQAMD
 
 We welcome contributions to our little project.
 
