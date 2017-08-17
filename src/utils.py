@@ -1,5 +1,7 @@
 import operator
 
+def group_together
+
 def most_freq_answer(values):
     ans_dict = {}
     for index in range(10):
