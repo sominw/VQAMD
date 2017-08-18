@@ -9,15 +9,16 @@ def freq_answers(training_questions, answer_train, images_train, upper_lim):
 
     sort_freq = sorted(freq_ans.items(), key=operator.itemgetter(1), reverse=True)[0:upper_lim]
     top_ans, top_freq = zip(*sort_freq)
-    new_answers_train=[]
-	new_questions_train=[]
-	new_images_train=[]
-    for ans,ques,img in zip(answers_train, training_questions, images_train):
-		if ans in top_answers:
-			new_answers_train.append(ans)
-			new_questions_train.append(ques)
-			new_images_train.append(img)
-    return (new_questions_train,new_answers_train,new_images_train)
+    new_answers_train = list()
+    new_questions_train = list()
+    new_images_train = list()
+    for ans, ques, img in zip(answer_train, training_questions, images_train):
+        if ans in top_ans:
+            new_answers_train.append(ans)
+            new_questions_train.append(ques)
+            new_images_train.append(img)
+            
+    return (new_questions_train, new_answers_train, new_images_train)
 
 
 def most_freq_answer(values):
