@@ -23,7 +23,7 @@ def freq_answers(training_questions, answer_train, images_train, upper_lim):
 
     return (new_questions_train, new_answers_train, new_images_train)
 
-def grouper(iterable, n, fillvalue=None):
+def grouped(iterable, n, fillvalue=None):
     args = [iter(iterable)] * n
     return zip_longest(*args, fillvalue=fillvalue)
 
@@ -36,7 +36,7 @@ def get_questions_sum(questions, nlp):
     for index in range(len(questions)):
         tokens = nlp(questions[index])
         for j in range(len(tokens)):
-            ques_matrix[i,:] += tokens[j].vector
+            ques_matrix[index,:] += tokens[j].vector
 
     return ques_matrix
 
