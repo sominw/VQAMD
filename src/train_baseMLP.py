@@ -66,9 +66,8 @@ def main():
         images_train = [images_train[i] for i in index_shuffle]
         progress = generic_utils.Progbar(len(training_questions))
         for ques_batch, ans_batch, im_batch in zip(grouped(training_questions, batch_size, fillvalue=training_questions[-1]), grouped(answers_train, batch_size, fillvalue=answers_train[-1]), grouped(images_train, batch_size, fillvalue=images_train[-1])):
-
             X_ques_batch = get_questions_sum(ques_batch, nlp)
-            X_img_batch = getget_images_matrix(im_batch, id_map, img_features)
+            X_img_batch = get_images_matrix(im_batch, id_map, img_features)
             X_batch = np.hstack((X_ques_batch, X_img_batch))
             Y_batch = get_answers_sum(ans_batch, lbl)
             loss = model.train_on_batch(X_batch, Y_batch)

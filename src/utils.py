@@ -1,5 +1,6 @@
 import operator
 from collections import defaultdict
+from itertools import zip_longest
 
 def freq_answers(training_questions, answer_train, images_train, upper_lim):
 
@@ -17,8 +18,12 @@ def freq_answers(training_questions, answer_train, images_train, upper_lim):
             new_answers_train.append(ans)
             new_questions_train.append(ques)
             new_images_train.append(img)
-            
+
     return (new_questions_train, new_answers_train, new_images_train)
+
+def grouper(iterable, n, fillvalue=None):
+    args = [iter(iterable)] * n
+    return zip_longest(*args, fillvalue=fillvalue)
 
 
 def most_freq_answer(values):
