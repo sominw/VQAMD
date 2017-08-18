@@ -30,7 +30,7 @@ def main():
     pk.dump(lbl, open('../preprocessed/label_encoder.sav','wb'))
 
     print (vgg_path)
-    upper_lim = 1000 #Number of most frequently occurring answers in COCOVQA (85%+)
+    upper_lim = 1500 #Number of most frequently occurring answers in COCOVQA (85%+)
     training_questions, answers_train, images_train = freq_answers(training_questions, answers_train, images_train, upper_lim)
     print (len(training_questions), len(answers_train),len(images_train))
     num_hidden_units = 1024
