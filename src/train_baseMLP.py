@@ -48,13 +48,13 @@ def main():
         id_map[id_split[0]] = int(id_split[1])
 
     model = Sequential()
-    model.add(Dense(num_hidden_units, input_dim=word2vec_dim+img_dim, init='uniform'))
+    model.add(Dense(num_hidden_units, input_dim=word2vec_dim+img_dim, kernel_initializer='uniform'))
     model.add(Dropout(dropout))
     for i in range(num_hidden_layers):
-        model.add(Dense(num_hidden_units, init='uniform'))
+        model.add(Dense(num_hidden_units, kernel_initializer='uniform'))
         model.add(Activation(activation))
         model.add(Dropout(dropout))
-    model.add(Dense(nb_classes, init='uniform'))
+    model.add(Dense(nb_classes, kernel_initializer='uniform'))
     model.add(Activation('softmax'))
 
     model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
