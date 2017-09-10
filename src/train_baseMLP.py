@@ -57,6 +57,10 @@ def main():
     model.add(Dense(nb_classes, kernel_initializer='uniform'))
     model.add(Activation('softmax'))
 
+    json_string = model.to_json()
+    model_path = '../models/mlp_' + str(num_hidden_layers) + '_' + str(num_hidden_units)
+    open(model_path + '.json','w').write(json_string)
+
     model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
 
     for k in range(num_epochs):
