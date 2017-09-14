@@ -17,7 +17,7 @@ def main():
     answers_train = open("../preprocessed/answer_train.txt","rb").read().decode('utf8').splitlines()
     images_train = open("../preprocessed/images_coco_id.txt","rb").read().decode('utf8').splitlines()
     img_ids = open('../preprocessed/coco_vgg_IDMap.txt').read().splitlines()
-    vgg_path = "/Users/sominwadhwa/Work/Minor/data/coco/vgg_feats.mat"
+    vgg_path = "/home/raunaq/vgg_feats.mat"
 
     vgg_features = scipy.io.loadmat(vgg_path)
     img_features = vgg_features['feats']
@@ -35,7 +35,7 @@ def main():
     print (len(training_questions), len(answers_train),len(images_train))
     num_hidden_units = 1024
     num_hidden_layers = 3
-    batch_size = 128
+    batch_size = 256
     dropout = 0.5
     activation = 'tanh'
     img_dim = 4096
