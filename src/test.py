@@ -88,12 +88,12 @@ def main():
     prints the top 5 response along with the probability of each '''
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-img', type=str, default='test.jpg')
+    parser.add_argument('-img', type=str, default='test1.jpg')
     parser.add_argument('-ques', type=str, default='What vechile is in the picture?')
     args = parser.parse_args()
 
     
-    if verbose : print("\n\n\nLoading image features ...")
+    if verbose : print("\nLoading image features ...")
     image_features = get_image_features(args.img, CNN_weights_file_name)
 
     if verbose : print("Loading question features ...")
@@ -103,7 +103,7 @@ def main():
     vqa_model = get_VQA_model(VQA_weights_file_name)
 
 
-    if verbose : print("\n\n\nPredicting result ...") 
+    if verbose : print("\nPredicting result ...") 
     y_output = vqa_model.predict([question_features, image_features])
     y_sort_index = np.argsort(y_output)
 
