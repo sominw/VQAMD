@@ -1,7 +1,9 @@
-from keras.models import Sequential
 import sys
-from keras.layers.core import Dense, Dropout, Activation
 from random import shuffle
+import pickle as pk
+
+from keras.models import Sequential
+from keras.layers.core import Dense, Dropout, Activation
 import numpy as np
 import scipy.io
 from keras.optimizers import SGD
@@ -9,15 +11,14 @@ from keras.utils import np_utils, generic_utils
 from sklearn.preprocessing import LabelEncoder
 from spacy.en import English
 from utils import freq_answers, grouped, get_questions_sum, get_images_matrix, get_answers_sum
-import pickle as pk
 
 def main():
 
-    training_questions = open("../preprocessed/ques_train.txt","rb").read().decode('utf8').splitlines()
-    answers_train = open("../preprocessed/answer_train.txt","rb").read().decode('utf8').splitlines()
-    images_train = open("../preprocessed/images_coco_id.txt","rb").read().decode('utf8').splitlines()
-    img_ids = open('../preprocessed/coco_vgg_IDMap.txt').read().splitlines()
-    vgg_path = "/home/raunaq/vgg_feats.mat"
+    training_questions = open("/code/preprocessed/ques_train.txt","rb").read().decode('utf8').splitlines()
+    answers_train = open("/code/preprocessed/answer_train.txt","rb").read().decode('utf8').splitlines()
+    images_train = open("/code/preprocessed/images_coco_id.txt","rb").read().decode('utf8').splitlines()
+    img_ids = open('/code/preprocessed/coco_vgg_IDMap.txt').read().splitlines()
+    vgg_path = "/input/vgg_feats.mat"
 
     vgg_features = scipy.io.loadmat(vgg_path)
     img_features = vgg_features['feats']
@@ -27,7 +28,7 @@ def main():
     lbl = LabelEncoder()
     lbl.fit(answers_train)
     nb_classes = len(list(lbl.classes_))
-    pk.dump(lbl, open('../preprocessed/label_encoder.sav','wb'))
+    pk.dump(lbl, open('/code/preprocessed/label_encoder.sav','wb'))
 
     print (vgg_path)
     upper_lim = 1500 #Number of most frequently occurring answers in COCOVQA (85%+)
@@ -35,7 +36,7 @@ def main():
     print (len(training_questions), len(answers_train),len(images_train))
     num_hidden_units = 1024
     num_hidden_layers = 3
-    batch_size = 256
+    batch_size = 128
     dropout = 0.5
     activation = 'tanh'
     img_dim = 4096
@@ -57,11 +58,8 @@ def main():
     model.add(Dense(nb_classes, kernel_initializer='uniform'))
     model.add(Activation('softmax'))
 
-    json_string = model.to_json()
-    model_path = '../models/mlp_' + str(num_hidden_layers) + '_' + str(num_hidden_units)
-    open(model_path + '.json','w').write(json_string)
-
     model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
+    tensorboard = TensorBoard(log_dir='/output/Graph', histogram_freq=0, write_graph=True, write_images=True)
 
     for k in range(num_epochs):
         index_shuffle = list(range(len(training_questions)))
@@ -75,12 +73,12 @@ def main():
             X_img_batch = get_images_matrix(im_batch, id_map, img_features)
             X_batch = np.hstack((X_ques_batch, X_img_batch))
             Y_batch = get_answers_sum(ans_batch, lbl)
-            loss = model.train_on_batch(X_batch, Y_batch)
+            loss = model.train_on_batch(X_batch, Y_batch,callbacks= [tensorboard])
             progbar.add(batch_size, values=[('train loss', loss)])
 
         if k%log_interval == 0:
-            model.save_weights("MLP" + "_epoch_{:02d}.hdf5".format(k))
-    model.save_weights("MLP" + "_epoch_{:02d}.hdf5".format(k))
+            model.save_weights("/output/MLP" + "_epoch_{:02d}.hdf5".format(k))
+    model.save_weights("/output/MLP" + "_epoch_{:02d}.hdf5".format(k))
 
 if __name__ == '__main__':
     main()

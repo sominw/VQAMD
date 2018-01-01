@@ -29,7 +29,24 @@ You should see an output - ``Imports successful. Good to go!``
 
 ## Directory Structure
 
-#### Top Level Structure
+#### Top-Level Structure:
+
+    .
+    .
+    ├── data                     # Data used and/or generated
+    │   ├── preprocessed
+    ├── src                    # Source Files
+    │   ├── trainMLP.py
+    │   ├── utils.py
+    │   ├── requirements.txt
+    │   ├── evaluateMLP.py
+    ├── test                    # Testing modules (including those for random-control experiments)
+    │   ├── init.py              
+    ├── LICENSE
+    └── README.md
+    .
+    .
+
 
 #### Files' Description
 
